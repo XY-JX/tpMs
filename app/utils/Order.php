@@ -16,7 +16,7 @@ class Order
 //            }
             Db::startTrans();
             try {
-                if(Db::table('goods')->where('id', $orderData['goods'])->where('stock','>=',$orderData['num'])->dec('stock', $orderData['num'])->inc('sales', $orderData['num'])->update()){
+                if(Db::table('goods')->where('id', $orderData['goods'])->where('stock','>',$orderData['num']-1)->dec('stock', $orderData['num'])->inc('sales', $orderData['num'])->update()){
                     $order = Db::table('order')->insert([
                         'uid' => $orderData['uid'],
                         'goods_id' => $orderData['goods'],
