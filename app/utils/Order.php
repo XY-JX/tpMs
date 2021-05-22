@@ -21,7 +21,6 @@ class Order
                         'uid' => $orderData['uid'],
                         'goods_id' => $orderData['goods'],
                         'num' => $orderData['num'],
-                        'time'
                     ],'id');
                     if($order){
                         Db::commit(); // 提交事务
