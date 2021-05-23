@@ -3,8 +3,6 @@ declare (strict_types=1);
 
 namespace app\subscribe;
 
-use think\facade\Log;
-
 class Order
 {
     /**  队列事件 */
