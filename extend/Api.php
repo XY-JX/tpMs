@@ -15,12 +15,11 @@ class Api
      */
     private static function return(int $code = 200, array $data = [], string $msg = 'success')
     {
-        $result = [
+        throw new \think\exception\HttpResponseException(json([
             'code' => $code,
             'data' => $data,
             'msg' => $msg,
-        ];
-        throw new \think\exception\HttpResponseException(json($result));
+        ]));
     }
 
     /**
