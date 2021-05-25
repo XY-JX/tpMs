@@ -2,12 +2,11 @@
 namespace app\http;
 
 use think\worker\Server;
-use Workerman\Lib\Timer;
 
 class Worker extends Server
 {
-
-    protected $timer;
+    protected $socket = 'http://0.0.0.0:23461';//必须申明
+    protected  $timer;
     /**
      * 每个进程启动
      * @param $worker
@@ -16,7 +15,7 @@ class Worker extends Server
     {
         if($worker->id === 0){
             //定时任务
-            Timer::add(1, function () {
+          $this->timer = \Workerman\Lib\Timer::add(1, function () {
                 event('CreateOrderRedisList');
             });
         }
