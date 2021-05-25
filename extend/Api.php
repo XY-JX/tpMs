@@ -9,11 +9,10 @@ class Api
 {
     /**
      * @param int $code 业务状态码
-     * @param array $data 返回数据{}/[]
+     * @param mixed $data 返回数据{}/[]
      * @param string $msg 返回描述
-     * @param array $error 返回错误信息
      */
-    private static function return(int $code = 200, array $data = [], string $msg = 'success')
+    private static function return(int $code = 200,  $data = [], string $msg = 'success')
     {
         throw new \think\exception\HttpResponseException(json([
             'code' => $code,
@@ -24,22 +23,22 @@ class Api
 
     /**
      * 成功 success
-     * @param array $data
+     * @param mixed $data
      * @param int $code
      * @param string $msg
      */
-    public static function success($data = [], $code = 200, $msg = 'success')
+    public static function success($data = [],int $code = 200, string $msg = 'success')
     {
-        return self::return($code, is_array($data) ? $data : [$data], $msg);
+        return self::return($code,  $data, $msg);
     }
 
     /**
      * 失败 FAIL
      * @param string $msg
      * @param int $code
-     * @param array $data
+     * @param mixed $data
      */
-    public static function error($msg = 'FAIL', $code = 400, $data = [])
+    public static function error(string $msg = 'FAIL',int $code = 400, $data = [])
     {
         return self::return($code, $data, $msg);
     }
