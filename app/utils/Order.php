@@ -35,7 +35,7 @@ class Order
                 return ['code' => 500, 'data' => $orderData, 'msg' => $e->getMessage(), 'id' => $orderData['id']];
             }
         } else {
-            return ['code' => 400, 'data' => $orderData, 'msg' => '参数错误', 'id' => $orderData['id']];
+            return ['code' => 400, 'data' => $orderData, 'msg' => '参数错误'];
         }
     }
 }
