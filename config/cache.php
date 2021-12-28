@@ -39,6 +39,8 @@ return [
             'prefix'   => '',
             // 序列化机制 例如 ['serialize', 'unserialize']
             'serialize'  => [],
+
+            'persistent' => false,
         ],
 
 

@@ -14,7 +14,7 @@ class Api extends BaseController
             ['uid', mt_rand(1, 100)],
             ['num', mt_rand(1, 5)]
         ]);
-        $redis = \utils::redis();
+        $redis =   \xy_jx\Utils\Sundry::redis(config('cache.stores.redis'));
         $id = md5(uniqid($orderInfo['uid'], true));
         $redis->lPush('order:createList', json_encode([
             'goods_id' => $orderInfo['goods_id'],
@@ -28,7 +28,37 @@ class Api extends BaseController
                 \Api::success($data['data'], $data['code'], $data['msg']);
             }
             //  usleep(10000);
-            usleep(10000);
+            usleep(5000);
+        }
+        \Api::success(['goods_id' => $orderInfo['goods_id']], 201, '正在排队中。。。');
+    }
+
+    public function add()
+    {
+        $orderInfo = $this::getData([
+            ['goods_id', mt_rand(1, 3)],
+            ['uid', mt_rand(1, 100)],
+            ['num', mt_rand(1, 5)]
+        ]);
+        $id = md5(uniqid($orderInfo['uid'], true));
+        \think\facade\Queue::push('Order@task1',
+            json_encode([
+                'goods_id' => $orderInfo['goods_id'],
+                'uid' => $orderInfo['uid'],
+                'num' => $orderInfo['num'],
+                'id' => $id
+            ]));
+        //   $redis = \utils::redis();
+        $redis =   \xy_jx\Utils\Sundry::redis(config('cache.stores.redis'));
+       // $redis = $redis->handler();
+      //  $redis = \xy_jx::redis();
+        for ($i = 0; $i < 500; $i++) {
+            if ($result = $redis->get('order:order_no_' . $id)) {
+                $data = json_decode($result, true);
+                \Api::success($data['data'], $data['code'], $data['msg']);
+            }
+            //  usleep(10000);
+            usleep(5000);
         }
         \Api::success(['goods_id' => $orderInfo['goods_id']], 201, '正在排队中。。。');
     }
