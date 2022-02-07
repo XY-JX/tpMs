@@ -11,7 +11,13 @@ class Order
 
         $orderData = json_decode($data, true);
         $return = \app\utils\Order::createOrderList($orderData);
-        $redis = \utils::redis();
+        $redisconfig = config('cache.stores.redis');
+        $redisconfig['persistent_id'] = 'job_order_task1';
+      //  print_r($redisconfig);exit();
+        $redis = \xy_jx\Utils\Sundry::redis($redisconfig);
+
+
+      //  $redis = \utils::redis();
         $redis->set('order:order_no_' . $return['id'], json_encode($return), 300);
         if ($return['code'] != 200) {// 下单失败
             trace('订单队列执行失败 :' . $orderData['goods_id'] . ' //// 订单失败信息 : ' . json_encode($return), 'orderListFail');

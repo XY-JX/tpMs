@@ -25,7 +25,7 @@
         "topthink/think-orm": "^2.0",
         "topthink/think-worker": "^3.0",
         "topthink/think-queue": "^3.0",
-        "xy_jx/utils": "^0.2.9"
+        "xy_jx/utils": "^0.3"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",
